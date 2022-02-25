@@ -1,64 +1,25 @@
+import java.util.*;
+
 class Solution {
     public int[] solution(int[] lottos, int[] win_nums) {
         int[] answer = new int[2];
+        Set<Integer> set = new HashSet<>();
         int correct = 0;
         int zero = 0;
         
         for(int l : lottos) {
+            set.add(l);
             if(l == 0)
                 zero++;
         }
               
-        for(int i = 0; i < win_nums.length; i++) {
-            for(int j = 0; j < lottos.length; j++) {
-                if(win_nums[i] == lottos[j]) {
-                    correct++;
-                    break;
-                }
-            }
+        for(int win : win_nums) {
+            if(set.contains(win))
+                correct++;
         }
         
-        switch(correct + zero) {
-            case 6:
-                answer[0] = 1;
-                break;
-            case 5:
-                answer[0] = 2;
-                break;
-            case 4:
-                answer[0] = 3;
-                break;
-            case 3:
-                answer[0] = 4;
-                break;
-            case 2:
-                answer[0] = 5;
-                break;
-            default:
-                answer[0] = 6;
-                break;
-        }
-        
-        switch(correct) {
-            case 6:
-                answer[1] = 1;
-                break;
-            case 5:
-                answer[1] = 2;
-                break;
-            case 4:
-                answer[1] = 3;
-                break;
-            case 3:
-                answer[1] = 4;
-                break;
-            case 2:
-                answer[1] = 5;
-                break;
-            default:
-                answer[1] = 6;
-                break;
-        }
+        answer[0] = Math.min(7 - (correct + zero), 6);
+        answer[1] = Math.min(7 - correct, 6);
         
         return answer;
     }
